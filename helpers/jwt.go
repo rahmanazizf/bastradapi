@@ -41,11 +41,38 @@ func VerifyToken(ctx *gin.Context) (interface{}, error) {
 		return nil, errors.New("You are not logged in")
 	}
 	token := strings.Split(auth, "")[1]
+	// parse token
 	parsedToken, err := jwt.Parse(token, func(t *jwt.Token) (interface{}, error) {
-		return secretKey, nil
+		if _, ok := t.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, errors.New("You are not logged in")
+		}
+		return []byte(secretKey), nil
 	})
 	if err != nil {
 		return nil, errors.New("You are not logged in")
 	}
-	return parsedToken, nil
+	// convert parsedToken to jwt claim
+	claims, ok := parsedToken.Claims.(jwt.MapClaims)
+	if !ok && !parsedToken.Valid {
+		return nil, errors.New("You are not logged in")
+	}
+	expClaim, exists := claims["expired"]
+	if !exists {
+		return nil, errors.New("Expire claim is missing")
+	}
+	// ensure expClaim is string
+	expStr, ok := expClaim.(string)
+	if !ok {
+		return nil, errors.New("Expire claim is not a valid type")
+	}
+	// parse time
+	expTime, err := time.Parse(time.RFC3339, expStr)
+	if err != nil {
+		return nil, errors.New("Error parsing expiration time")
+	}
+	// ensure current time is not beyond expire date
+	if time.Now().After(expTime) {
+		return nil, errors.New("Token is expired")
+	}
+	return parsedToken.Claims.(jwt.MapClaims), nil
 }
