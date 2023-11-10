@@ -32,7 +32,15 @@ func Register(ctx *gin.Context) {
 			return
 		}
 	}
-	res := connectDB.DB.Create(&admin)
+	// check if the same email had already been registered
+	res := connectDB.DB.First(&admin, "email = ?", admin.Email)
+	if res.RowsAffected > 0 {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"message": "The same email had already been registered. Please use a different email.",
+		})
+		return
+	}
+	res = connectDB.DB.Create(&admin)
 	if res.RowsAffected == 0 {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"message": "No rows created in the database",
@@ -75,9 +83,10 @@ func Login(ctx *gin.Context) {
 	compareUsername := admin.Name == adminInput.Name
 	isPwdCorrect := helpers.ComparePwd(admin.Password, adminInput.Password, admin.Salt)
 	if res.RowsAffected > 0 && compareUsername && isPwdCorrect {
+		token := helpers.GenerateToken(admin.ID, admin.Email)
 		ctx.JSON(http.StatusOK, gin.H{
 			"message": "Login successful",
-			"data":    admin,
+			"token":   token,
 		})
 		return
 	} else {
