@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"basic-trade-api/database"
 	"basic-trade-api/helpers"
 	"basic-trade-api/models"
 	"net/http"
@@ -33,14 +34,16 @@ func Register(ctx *gin.Context) {
 		}
 	}
 	// check if the same email had already been registered
-	res := connectDB.DB.First(&admin, "email = ?", admin.Email)
+	// res := connectDB.DB.First(&admin, "email = ?", admin.Email)
+	res := database.ConnectToDB().First(&admin, "email = ?", admin.Email)
 	if res.RowsAffected > 0 {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"message": "The same email had already been registered. Please use a different email.",
 		})
 		return
 	}
-	res = connectDB.DB.Create(&admin)
+	// res = connectDB.DB.Create(&admin)
+	res = database.ConnectToDB().Create(&admin)
 	if res.RowsAffected == 0 {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"message": "No rows created in the database",
@@ -79,7 +82,8 @@ func Login(ctx *gin.Context) {
 			return
 		}
 	}
-	res := connectDB.DB.First(&admin)
+	// res := connectDB.DB.First(&admin)
+	res := database.ConnectToDB().First(&admin)
 	compareUsername := admin.Name == adminInput.Name
 	isPwdCorrect := helpers.ComparePwd(admin.Password, adminInput.Password, admin.Salt)
 	if res.RowsAffected > 0 && compareUsername && isPwdCorrect {

@@ -14,8 +14,13 @@ import (
 	"gorm.io/gorm"
 )
 
-func DBConnection() *gorm.DB {
-	if err := godotenv.Load(); err != nil {
+var (
+	db  *gorm.DB
+	err error
+)
+
+func DBConnection() {
+	if err = godotenv.Load(); err != nil {
 		log.Fatalf("Error loading .env file: %v", err)
 	}
 	var (
@@ -27,7 +32,7 @@ func DBConnection() *gorm.DB {
 	)
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable TimeZone=Asia/Shanghai",
 		host, user, password, dbname, port)
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	helpers.CheckError(err)
 
 	db.Exec("DROP TABLE IF EXISTS variants")
@@ -37,6 +42,8 @@ func DBConnection() *gorm.DB {
 
 	db.AutoMigrate(&models.Admin{}, &models.Product{}, &models.Variant{})
 
-	return db
+}
 
+func ConnectToDB() *gorm.DB {
+	return db
 }

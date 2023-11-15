@@ -25,7 +25,7 @@ func StartServer() *gin.Engine {
 	{
 		// products query
 		products.POST("/")
-		products.GET("/")
+		products.GET("/", controllers.GetAllProducts)
 		products.GET("/:productUUID")
 		products.PUT("/:productUUID")
 		products.DELETE("/:productUUID")
