@@ -13,12 +13,12 @@ import (
 // generate token dengan menggunakan credential dan secret key
 var secretKey = "this-is-mY-s3c12eT-k3Y"
 
-func GenerateToken(userID int, email string) string {
+func GenerateToken(adminID int, email string) string {
 	// buat klaim
 	claims := jwt.MapClaims{
-		"id":      userID,
+		"id":      adminID,
 		"email":   email,
-		"expired": time.Now().Add(time.Minute * 1),
+		"expired": time.Now().Add(time.Minute * 10),
 	}
 
 	// buat token dengan menggunakan klaim
@@ -40,7 +40,7 @@ func VerifyToken(ctx *gin.Context) (interface{}, error) {
 	if !bearerExist {
 		return nil, errors.New("You are not logged in")
 	}
-	token := strings.Split(auth, "")[1]
+	token := strings.Split(auth, " ")[1]
 	// parse token
 	parsedToken, err := jwt.Parse(token, func(t *jwt.Token) (interface{}, error) {
 		if _, ok := t.Method.(*jwt.SigningMethodHMAC); !ok {
