@@ -2,6 +2,7 @@ package routers
 
 import (
 	"basic-trade-api/controllers"
+	"basic-trade-api/middleware"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -24,14 +25,15 @@ func StartServer() *gin.Engine {
 	products := router.Group("/products")
 	{
 		// products query
-		products.POST("/")
 		products.GET("/", controllers.GetAllProducts)
-		products.GET("/:productUUID")
-		products.PUT("/:productUUID")
-		products.DELETE("/:productUUID")
+		products.GET("/:productUUID", controllers.GetProductByID)
 		// variants query
 		products.GET("/variants")
 		products.GET("/variants/:variantUUID")
+		products.Use(middleware.Authenticate())
+		products.POST("/", controllers.CreateProduct)
+		products.PUT("/:productUUID", middleware.AuthorizedProduct(), controllers.UpdateProductByID)
+		products.DELETE("/:productUUID", middleware.AuthorizedProduct(), controllers.DeleteProductByID)
 		products.POST("/variants")
 		products.PUT("/variants/:variantUUID")
 		products.DELETE("/variants/:variantUUID")
