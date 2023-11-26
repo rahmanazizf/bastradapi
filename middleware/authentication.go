@@ -20,7 +20,7 @@ func Authenticate() gin.HandlerFunc {
 			return
 		}
 		// set claims to context with key "UserData"
-		ctx.Set("UserData", res)
+		ctx.Set("AdminData", res)
 		// proceed to handler function
 		ctx.Next()
 
