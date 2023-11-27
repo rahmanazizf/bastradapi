@@ -6,45 +6,56 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 )
 
 // products
 func GetAllProducts(ctx *gin.Context) {
-	var products *[]models.Product
-	// get all products based on admin ID?
-	res := connectDB.DB.Preload("Variant").Find(&products)
+	var products []models.Product
+	productName := ctx.Query("product_name")
+
+	db := database.ConnectToDB()
+	var res *gorm.DB
+	if productName != "" {
+		res = db.Preload("Variants").Where("product_name ILIKE ?", "%"+productName+"%").Find(&products)
+	} else {
+		res = db.Preload("Variants").Find(&products)
+	}
 	if res.Error != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
-			"message": "An error occured during data retrieval",
+			"status":  "failed",
+			"message": res.Error.Error(),
 		})
 		return
 	}
 	ctx.JSON(http.StatusOK, gin.H{
-		"message": "success",
-		"data":    products,
+		"status": "success",
+		"data":   products,
 	})
 }
 
 func CreateProduct(ctx *gin.Context) {
 	var product *models.Product
-	err := ctx.ShouldBindJSON(product)
+	err := ctx.ShouldBindJSON(&product)
 	if err != nil {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+			"status":  "failed",
 			"message": err.Error(),
 		})
 		return
 	}
-	res := connectDB.DB.Create(&product)
+	res := database.ConnectToDB().Create(&product)
 	if res.Error != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
-			"message": "Failed to create record",
+			"status":  "failed",
+			"message": res.Error.Error(),
 		})
 		return
 	}
 	ctx.JSON(http.StatusOK, gin.H{
-		"message": "success",
-		"data":    product,
+		"status": "success",
+		"data":   product,
 	})
 }
 
@@ -92,19 +103,20 @@ func UpdateProductByID(ctx *gin.Context) {
 	if res.Error != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
 			"status":  "failed",
-			"message": res.Error,
+			"message": res.Error.Error(),
 		})
 		return
 	}
 
-	product.ImageURL = productUpdated.ImageURL
+	// image url sementara diilangin dulu
+	// product.ImageURL = productUpdated.ImageURL
 	product.ProductName = productUpdated.ProductName
 	product.Variants = productUpdated.Variants
 	res = database.ConnectToDB().Save(&product)
 	if res.Error != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
 			"status":  "failed",
-			"message": res.Error,
+			"message": res.Error.Error(),
 		})
 		return
 	}
@@ -136,25 +148,4 @@ func DeleteProductByID(ctx *gin.Context) {
 		"status":  "success",
 		"message": deletedProduct,
 	})
-}
-
-// variants
-func GetAllVariants(ctx *gin.Context) {
-	return
-}
-
-func GetVariantByID(ctx *gin.Context) {
-	return
-}
-
-func CreateVariant(ctx *gin.Context) {
-	return
-}
-
-func UpdateVariantByID(ctx *gin.Context) {
-	return
-}
-
-func DeleteVariantByID(ctx *gin.Context) {
-	return
 }

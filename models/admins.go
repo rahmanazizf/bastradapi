@@ -9,15 +9,15 @@ import (
 )
 
 type Admin struct {
-	ID        int       `gorm:"primary_key" json:"-"`
+	ID        int       `gorm:"primary_key" json:"id"`
 	UUID      string    `json:"-"`
 	Name      string    `json:"name" form:"name"`
 	Email     string    `json:"email" form:"email"`
 	Password  string    `json:"password" form:"password"`
-	Salt      string    `json:"salt"`
+	Salt      string    `json:"-"`
 	CreatedAt time.Time `gorm:"autoCreatedTime" json:"-"`
 	UpdatedAt time.Time `gorm:"autoUpdatedTime" json:"-"`
-	Products  []Product `gorm:"constraint:OnDelete:CASCADE" json:"products"`
+	Products  []Product `gorm:"constraint:OnDelete:CASCADE" json:"-"`
 }
 
 // hook(s)

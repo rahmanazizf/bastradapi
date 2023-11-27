@@ -28,15 +28,15 @@ func StartServer() *gin.Engine {
 		products.GET("/", controllers.GetAllProducts)
 		products.GET("/:productUUID", controllers.GetProductByID)
 		// variants query
-		products.GET("/variants")
-		products.GET("/variants/:variantUUID")
+		products.GET("/variants", controllers.GetAllVariants)
+		products.GET("/variants/:variantUUID", controllers.GetVariantByID)
 		products.Use(middleware.Authenticate())
 		products.POST("/", controllers.CreateProduct)
-		products.PUT("/:productUUID", middleware.AuthorizedProduct(), controllers.UpdateProductByID)
-		products.DELETE("/:productUUID", middleware.AuthorizedProduct(), controllers.DeleteProductByID)
-		products.POST("/variants")
-		products.PUT("/variants/:variantUUID")
-		products.DELETE("/variants/:variantUUID")
+		products.PUT("/:productUUID", middleware.AuthorizeProduct(), controllers.UpdateProductByID)
+		products.DELETE("/:productUUID", middleware.AuthorizeProduct(), controllers.DeleteProductByID)
+		products.POST("/variants", controllers.CreateVariant)
+		products.PUT("/variants/:variantUUID", middleware.AuthorizeVariant(), controllers.UpdateVariantByID)
+		products.DELETE("/variants/:variantUUID", middleware.AuthorizeVariant(), controllers.DeleteVariantByID)
 	}
 
 	return router

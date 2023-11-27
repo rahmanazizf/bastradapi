@@ -6,12 +6,22 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 // variants
 func GetAllVariants(ctx *gin.Context) {
-	var variants *[]models.Variant
-	res := database.ConnectToDB().Find(&variants)
+	var variants *[]models.Product
+	variantName := ctx.Query("variant_name")
+
+	db := database.ConnectToDB()
+	var res *gorm.DB
+	if variantName != "" {
+		res = db.Where("product_name ILIKE ?", "%"+variantName+"%").Find(&variants)
+	} else {
+		res = db.Find(&variants)
+	}
 	if res.Error != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
 			"status":  "failed",
@@ -107,10 +117,43 @@ func UpdateVariantByID(ctx *gin.Context) {
 		})
 		return
 	}
-
-	return
+	variant.ProductID = variantUpdated.ProductID
+	variant.Quantity = variantUpdated.Quantity
+	variant.VariantName = variantUpdated.VariantName
+	res = database.ConnectToDB().Save(&variant)
+	if res.Error != nil {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+			"status":  "failed",
+			"message": res.Error.Error(),
+		})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{
+		"status": "success",
+		"data":   variant,
+	})
 }
 
 func DeleteVariantByID(ctx *gin.Context) {
-	return
+	variantUUID := ctx.Param("variantUUID")
+	var deletedVariant *models.Variant
+	res := database.ConnectToDB().Clauses(clause.Returning{}).Delete(&deletedVariant, "uuid = ?", variantUUID)
+	if res.Error != nil {
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+			"status":  "failed",
+			"message": res.Error.Error(),
+		})
+		return
+	}
+	if res.RowsAffected == 0 {
+		ctx.AbortWithStatusJSON(http.StatusNotFound, gin.H{
+			"status":  "failed",
+			"message": "Product with given uuid is not found!",
+		})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{
+		"status":  "success",
+		"message": deletedVariant,
+	})
 }
