@@ -18,7 +18,7 @@ func GetAllVariants(ctx *gin.Context) {
 	db := database.ConnectToDB()
 	var res *gorm.DB
 	if variantName != "" {
-		res = db.Where("product_name ILIKE ?", "%"+variantName+"%").Find(&variants)
+		res = db.Where("variant_name ILIKE ?", "%"+variantName+"%").Find(&variants)
 	} else {
 		res = db.Find(&variants)
 	}
