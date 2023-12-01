@@ -12,7 +12,7 @@ import (
 
 // variants
 func GetAllVariants(ctx *gin.Context) {
-	var variants *[]models.Product
+	var variants *[]models.Variant
 	variantName := ctx.Query("variant_name")
 
 	db := database.ConnectToDB()
