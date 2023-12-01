@@ -137,13 +137,6 @@ func UpdateProductByID(ctx *gin.Context) {
 		product.ImageURL = secureURL
 		product.Variants = productUpdated.Variants
 	}
-	// if err := ctx.ShouldBindJSON(&productUpdated); err != nil {
-	// 	ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-	// 		"status":  "failed",
-	// 		"message": err.Error(),
-	// 	})
-	// 	return
-	// }
 
 	res := database.ConnectToDB().Find(&product, "uuid = ?", productUUID)
 	if res.RowsAffected == 0 {
@@ -165,8 +158,6 @@ func UpdateProductByID(ctx *gin.Context) {
 		return
 	}
 
-	// image url sementara diilangin dulu
-	// product.ImageURL = productUpdated.ImageURL
 	product.ProductName = productUpdated.ProductName
 	product.Variants = productUpdated.Variants
 	res = database.ConnectToDB().Save(&product)

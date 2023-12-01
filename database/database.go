@@ -8,7 +8,6 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -20,9 +19,9 @@ var (
 )
 
 func DBConnection() {
-	if err = godotenv.Load(); err != nil {
-		log.Fatalf("Error loading .env file: %v", err)
-	}
+	// if err = godotenv.Load(); err != nil {
+	// 	log.Fatalf("Error loading .env file: %v", err)
+	// }
 	var (
 		host     = os.Getenv("HOST")
 		port, _  = strconv.Atoi(os.Getenv("PORT"))

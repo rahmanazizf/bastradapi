@@ -34,7 +34,6 @@ func Register(ctx *gin.Context) {
 		}
 	}
 	// check if the same email had already been registered
-	// res := connectDB.DB.First(&admin, "email = ?", admin.Email)
 	res := database.ConnectToDB().First(&admin, "email = ?", admin.Email)
 	if res.RowsAffected > 0 {
 		ctx.JSON(http.StatusBadRequest, gin.H{
@@ -84,7 +83,6 @@ func Login(ctx *gin.Context) {
 			return
 		}
 	}
-	// res := connectDB.DB.First(&admin)
 	res := database.ConnectToDB().First(&admin, "email = ?", adminInput.Email)
 	compareUsername := admin.Name == adminInput.Name
 	isPwdCorrect := helpers.ComparePwd(admin.Password, adminInput.Password, admin.Salt)
