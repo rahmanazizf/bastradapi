@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"basic-trade-api/database"
+	"basic-trade-api/helpers"
 	"basic-trade-api/models"
 	"net/http"
 
@@ -36,15 +37,38 @@ func GetAllProducts(ctx *gin.Context) {
 }
 
 func CreateProduct(ctx *gin.Context) {
-	var product *models.Product
-	err := ctx.ShouldBindJSON(&product)
-	if err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"status":  "failed",
-			"message": err.Error(),
-		})
-		return
+	// var product *models.Product
+	// var productForm *models.ProductImage
+	product := models.Product{}
+	productForm := models.ProductImage{}
+	var err error
+	if ctx.Request.Header.Get("Content-Type") == "application/json" {
+		err := ctx.ShouldBindJSON(&product)
+		if err != nil {
+			ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+				"status":  "failed",
+				"message": err.Error(),
+			})
+			return
+		}
+	} else {
+		err = ctx.ShouldBind(&productForm)
+		helpers.CheckError(err)
+		fileName := helpers.RemoveExtension(productForm.ImageFile.Filename)
+		secureURL, err := helpers.UploadFile(productForm.ImageFile, fileName)
+		if err != nil {
+			ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+				"status":  "failed",
+				"message": err.Error(),
+			})
+			return
+		}
+		product.ProductName = productForm.ProductName
+		product.AdminID = productForm.AdminID
+		product.ImageURL = secureURL
+		product.Variants = productForm.Variants
 	}
+
 	res := database.ConnectToDB().Create(&product)
 	if res.Error != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
@@ -62,11 +86,17 @@ func CreateProduct(ctx *gin.Context) {
 func GetProductByID(ctx *gin.Context) {
 	productUUID := ctx.Param("productUUID")
 	var product *models.Product
-	res := database.ConnectToDB().First(&product, "uuid = ?", productUUID)
-	if res != nil {
+	res := database.ConnectToDB().Preload("Variants").First(&product, "uuid = ?", productUUID)
+	if res.RowsAffected == 0 {
+		ctx.AbortWithStatusJSON(http.StatusNotFound, gin.H{
+			"status":  "failed",
+			"message": "no records with given uuid found",
+		})
+	}
+	if res.Error != nil {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 			"status":  "failed",
-			"message": res.Error,
+			"message": res.Error.Error(),
 		})
 		return
 	}
@@ -78,15 +108,42 @@ func GetProductByID(ctx *gin.Context) {
 
 func UpdateProductByID(ctx *gin.Context) {
 	productUUID := ctx.Param("productUUID")
-	var productUpdated *models.Product
-	var product *models.Product
-	if err := ctx.ShouldBindJSON(&productUpdated); err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"status":  "failed",
-			"message": err.Error(),
-		})
-		return
+	var productUpdated = models.ProductImage{}
+	var product = models.Product{}
+	var err error
+	if ctx.Request.Header.Get("Content-Type") == "application/json" {
+		err := ctx.ShouldBindJSON(&product)
+		if err != nil {
+			ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+				"status":  "failed",
+				"message": err.Error(),
+			})
+			return
+		}
+	} else {
+		err = ctx.ShouldBind(&productUpdated)
+		helpers.CheckError(err)
+		fileName := helpers.RemoveExtension(productUpdated.ImageFile.Filename)
+		secureURL, err := helpers.UploadFile(productUpdated.ImageFile, fileName)
+		if err != nil {
+			ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+				"status":  "failed",
+				"message": err.Error(),
+			})
+			return
+		}
+		product.ProductName = productUpdated.ProductName
+		product.AdminID = productUpdated.AdminID
+		product.ImageURL = secureURL
+		product.Variants = productUpdated.Variants
 	}
+	// if err := ctx.ShouldBindJSON(&productUpdated); err != nil {
+	// 	ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+	// 		"status":  "failed",
+	// 		"message": err.Error(),
+	// 	})
+	// 	return
+	// }
 
 	res := database.ConnectToDB().Find(&product, "uuid = ?", productUUID)
 	if res.RowsAffected == 0 {
