@@ -581,13 +581,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/products/f02c4706-49d5-42b8-92a1-2bbc1a46d864",
+							"raw": "{{base_url}}/products/b6153b26-e157-4ee9-931b-567d41d5bbf2",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"products",
-								"f02c4706-49d5-42b8-92a1-2bbc1a46d864"
+								"b6153b26-e157-4ee9-931b-567d41d5bbf2"
 							]
 						}
 					},
@@ -968,7 +968,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6aXpAbWFpbC5jb20iLCJleHBpcmVkIjoiMjAyMy0xMi0wMVQxMDowOToyMy43MzYyNzA0KzA3OjAwIiwiaWQiOjF9.GVfemTQhg5_U2R_rZR4JlznUFLN9JdFYJjUK2W17FIQ",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6aXpAbWFpbC5jb20iLCJleHBpcmVkIjoiMjAyMy0xMi0wMVQwNDoyMzo1My4zNjA3MDAzODlaIiwiaWQiOjF9.Fsj75kNrdAESTvY3xKnzXbOBzQVA6wP_gQbJLNRTzOI",
 				"type": "string"
 			}
 		]
@@ -1000,7 +1000,7 @@
 		},
 		{
 			"key": "base_url",
-			"value": "http://localhost:8989"
+			"value": "https://bastradapi-production.up.railway.app"
 		}
 	]
 }
