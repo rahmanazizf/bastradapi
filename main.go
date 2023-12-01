@@ -4,10 +4,13 @@ import (
 	"basic-trade-api/database"
 	"basic-trade-api/routers"
 	"fmt"
+	"os"
 )
+
+var PORT = os.Getenv("PORT")
 
 func main() {
 	database.DBConnection()
-	fmt.Println("Listening on localhost:8989")
-	routers.StartServer().Run(":8989")
+	fmt.Println(fmt.Sprintf("Listening on :%s", PORT))
+	routers.StartServer().Run(fmt.Sprintf(":%s", PORT))
 }

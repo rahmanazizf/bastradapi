@@ -23,11 +23,11 @@ func DBConnection() {
 	// 	log.Fatalf("Error loading .env file: %v", err)
 	// }
 	var (
-		host     = os.Getenv("HOST")
-		port, _  = strconv.Atoi(os.Getenv("PORT"))
-		user     = os.Getenv("USER")
-		password = os.Getenv("PASSWORD")
-		dbname   = os.Getenv("DBNAME")
+		host     = os.Getenv("PGHOST")
+		port, _  = strconv.Atoi(os.Getenv("PGPORT"))
+		user     = os.Getenv("PGUSER")
+		password = os.Getenv("PGPASSWORD")
+		dbname   = os.Getenv("PGDATABASE")
 	)
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable TimeZone=Asia/Shanghai",
 		host, user, password, dbname, port)
