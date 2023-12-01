@@ -2,6 +2,7 @@ package models
 
 import (
 	"log"
+	"mime/multipart"
 	"time"
 
 	"github.com/go-playground/validator/v10"
@@ -9,17 +10,22 @@ import (
 	"gorm.io/gorm"
 )
 
-// TODO: tambahkan validasi
 type Product struct {
-	ID          int    `gorm:"primary_key" json:"id"`
-	UUID        string `gorm:"not null" json:"uuid"`
-	ProductName string `gorm:"not null" json:"product_name" validate:"required"`
-	// image url sementara diilangin dulu
-	// ImageURL    string    `gorm:"not null" json:"image_url" validate:"required"`
-	AdminID   int       `gorm:"not null" json:"admin_id" validate:"required"`
-	CreatedAt time.Time `gorm:"autoCreatedTime" json:"-"`
-	UpdatedAt time.Time `gorm:"autoUpdatedTime" json:"-"`
-	Variants  []Variant `gorm:"constraint:OnDelete:CASCADE" json:"variants"`
+	ID          int       `gorm:"primary_key" json:"id"`
+	UUID        string    `gorm:"not null" json:"uuid"`
+	ProductName string    `gorm:"not null" json:"product_name" validate:"required"`
+	ImageURL    string    `gorm:"not null" json:"image_url" validate:"required"`
+	AdminID     int       `gorm:"not null" json:"admin_id" validate:"required"`
+	CreatedAt   time.Time `gorm:"autoCreatedTime" json:"-"`
+	UpdatedAt   time.Time `gorm:"autoUpdatedTime" json:"-"`
+	Variants    []Variant `gorm:"constraint:OnDelete:CASCADE" json:"variants"`
+}
+
+type ProductImage struct {
+	ProductName string                `form:"product_name" binding:"required"`
+	ImageFile   *multipart.FileHeader `form:"image_file" binding:"required"`
+	AdminID     int                   `form:"admin_id" binding:"required"`
+	Variants    []Variant             `form:"variants"`
 }
 
 func (p *Product) BeforeCreate(tx *gorm.DB) (err error) {
