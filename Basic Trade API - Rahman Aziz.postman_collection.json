@@ -1,0 +1,1006 @@
+{
+	"info": {
+		"_postman_id": "6886e2a5-c15a-498f-a4f0-f3d0b24061dc",
+		"name": "Basic Trade API - Rahman Aziz",
+		"description": "# 🚀 Get started here\n\nThis template guides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.\n\n## 🔖 **How to use this template**\n\n#### **Step 1: Send requests**\n\nRESTful APIs allow you to perform CRUD operations using the POST, GET, PUT, and DELETE HTTP methods.\n\nThis collection contains each of these request types. Open each request and click \"Send\" to see what happens.\n\n#### **Step 2: View responses**\n\nObserve the response tab for status code (200 OK), response time, and size.\n\n#### **Step 3: Send new Body data**\n\nUpdate or add new data in \"Body\" in the POST request. Typically, Body data is also used in PUT request.\n\n```\n{\n    \"name\": \"Add your name in the body\"\n}\n\n```\n\n#### **Step 4: Update the variable**\n\nVariables enable you to store and reuse values in Postman. We have created a variable called `base_url` with the sample request [https://postman-api-learner.glitch.me](https://postman-api-learner.glitch.me). Replace it with your API endpoint to customize this collection.\n\n#### **Step 5: Add tests in the \"Tests\" tab**\n\nTests help you confirm that your API is working as expected. You can write test scripts in JavaScript and view the output in the \"Test Results\" tab.\n\n<img src=\"https://content.pstmn.io/b5f280a7-4b09-48ec-857f-0a7ed99d7ef8/U2NyZWVuc2hvdCAyMDIzLTAzLTI3IGF0IDkuNDcuMjggUE0ucG5n\">\n\n## 💪 Pro tips\n\n- Use folders to group related requests and organize the collection.\n- Add more scripts in \"Tests\" to verify if the API works as expected and execute flows.\n    \n\n## ℹ️ Resources\n\n[Building requests](https://learning.postman.com/docs/sending-requests/requests/)  \n[Authorizing requests](https://learning.postman.com/docs/sending-requests/authorization/)  \n[Using variables](https://learning.postman.com/docs/sending-requests/variables/)  \n[Managing environments](https://learning.postman.com/docs/sending-requests/managing-environments/)  \n[Writing scripts](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24243266"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "aziz",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "aziz@mail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "aziz123***",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Register",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "aziz",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "aziz@mail.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "aziz123***",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/auth/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Dec 2023 01:41:16 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "148"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"aziz\",\n        \"email\": \"aziz@mail.com\",\n        \"password\": \"$2a$07$g3sFw1415uus41OXIi5IR.0dgahyFv8Maj4kMTWqLVWoLySFEV2Ty\"\n    },\n    \"status\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": []
+					},
+					"response": [
+						{
+							"name": "Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "aziz",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "aziz@mail.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "aziz123***",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/auth/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Dec 2023 01:50:05 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "225"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"Login successful\",\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6aXpAbWFpbC5jb20iLCJleHBpcmVkIjoiMjAyMy0xMi0wMVQwOTowMDowMS4yODI5MTAzKzA3OjAwIiwiaWQiOjF9.Crs5-rUpA4ezUKllAovy8eNS8epA8nolawaYur3IJ68\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Create a product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "product_name",
+									"value": "sarimie",
+									"type": "text"
+								},
+								{
+									"key": "admin_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "image_file",
+									"type": "file",
+									"src": "/C:/Users/USER/Pictures/TestTemplate_fetcherror_Network.jpg"
+								},
+								{
+									"key": "variants",
+									"value": "{\"variant_name\" :\"hehe\",\n\"product_id\":1,\n\"qty\":50}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/products",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create a product",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "product_name",
+											"value": "sarimie",
+											"type": "text"
+										},
+										{
+											"key": "admin_id",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "image_file",
+											"type": "file",
+											"src": "/C:/Users/USER/Pictures/TestTemplate_fetcherror_Network.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/products",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"products"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Dec 2023 01:59:48 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "264"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"id\": 1,\n        \"uuid\": \"4084d118-3851-4391-b06d-ea868a8e4aaa\",\n        \"product_name\": \"sarimie\",\n        \"image_url\": \"https://res.cloudinary.com/dbjzdsa1w/image/upload/v1701394769/basic-trade-api/TestTemplate_fetcherror_Network.jpg\",\n        \"admin_id\": 1,\n        \"variants\": null\n    },\n    \"status\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "product_name",
+									"value": "indomie",
+									"type": "text"
+								},
+								{
+									"key": "admin_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "image_file",
+									"type": "file",
+									"src": "/C:/Users/USER/Pictures/TestTemplate_fetcherror_Docker.jpg"
+								},
+								{
+									"key": "variants",
+									"value": "{\"variant_name\" :\"indomie goreng rendang\",\n\"product_id\":1,\n\"qty\":50}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/products/89bbd85d-3c92-4d2d-b9dd-9bd201d1e3fc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"89bbd85d-3c92-4d2d-b9dd-9bd201d1e3fc"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update product",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "product_name",
+											"value": "indomie",
+											"type": "text"
+										},
+										{
+											"key": "admin_id",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "image_file",
+											"type": "file",
+											"src": "/C:/Users/USER/Pictures/TestTemplate_fetcherror_Docker.jpg"
+										},
+										{
+											"key": "variants",
+											"value": "{\"variant_name\" :\"indomie goreng rendang\",\n\"product_id\":1,\n\"qty\":50}",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/products/8602d779-e289-4e60-9e95-91e9c2a03c78",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"products",
+										"8602d779-e289-4e60-9e95-91e9c2a03c78"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Dec 2023 02:42:29 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "380"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"id\": 1,\n        \"uuid\": \"8602d779-e289-4e60-9e95-91e9c2a03c78\",\n        \"product_name\": \"indomie\",\n        \"image_url\": \"https://res.cloudinary.com/dbjzdsa1w/image/upload/v1701394769/basic-trade-api/TestTemplate_fetcherror_Network.jpg\",\n        \"admin_id\": 1,\n        \"variants\": [\n            {\n                \"id\": 2,\n                \"uuid\": \"073d8b89-c5dd-4b4b-b3ad-c40e54971807\",\n                \"variant_name\": \"indomie goreng rendang\",\n                \"qty\": 50,\n                \"product_id\": 1\n            }\n        ]\n    },\n    \"status\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get all products",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6aXpAbWFpbC5jb20iLCJleHBpcmVkIjoiMjAyMy0xMS0yOVQwODoyMjowNy40NzQ3NjM2KzA3OjAwIiwiaWQiOjF9.5WCUvSumgIfyWnBKz03P7yTgKrWDET5OsGJG4YaLPts",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get all products",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{base_url}}/products",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"products"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Dec 2023 02:42:51 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "382"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"uuid\": \"8602d779-e289-4e60-9e95-91e9c2a03c78\",\n            \"product_name\": \"indomie\",\n            \"image_url\": \"https://res.cloudinary.com/dbjzdsa1w/image/upload/v1701394769/basic-trade-api/TestTemplate_fetcherror_Network.jpg\",\n            \"admin_id\": 1,\n            \"variants\": [\n                {\n                    \"id\": 2,\n                    \"uuid\": \"073d8b89-c5dd-4b4b-b3ad-c40e54971807\",\n                    \"variant_name\": \"indomie goreng rendang\",\n                    \"qty\": 50,\n                    \"product_id\": 1\n                }\n            ]\n        }\n    ],\n    \"status\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get products by name",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6aXpAbWFpbC5jb20iLCJleHBpcmVkIjoiMjAyMy0xMS0yOVQwODoyMjowNy40NzQ3NjM2KzA3OjAwIiwiaWQiOjF9.5WCUvSumgIfyWnBKz03P7yTgKrWDET5OsGJG4YaLPts",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products?product_name=indomie",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "product_name",
+									"value": "indomie"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get products by name",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/products?product_name=indomie",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"products"
+									],
+									"query": [
+										{
+											"key": "product_name",
+											"value": "indomie"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Dec 2023 02:43:15 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "382"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"uuid\": \"8602d779-e289-4e60-9e95-91e9c2a03c78\",\n            \"product_name\": \"indomie\",\n            \"image_url\": \"https://res.cloudinary.com/dbjzdsa1w/image/upload/v1701394769/basic-trade-api/TestTemplate_fetcherror_Network.jpg\",\n            \"admin_id\": 1,\n            \"variants\": [\n                {\n                    \"id\": 2,\n                    \"uuid\": \"073d8b89-c5dd-4b4b-b3ad-c40e54971807\",\n                    \"variant_name\": \"indomie goreng rendang\",\n                    \"qty\": 50,\n                    \"product_id\": 1\n                }\n            ]\n        }\n    ],\n    \"status\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete product by uuid",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products/4084d118-3851-4391-b06d-ea868a8e4aaa",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"4084d118-3851-4391-b06d-ea868a8e4aaa"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete product by uuid",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/products/4084d118-3851-4391-b06d-ea868a8e4aaa",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"products",
+										"4084d118-3851-4391-b06d-ea868a8e4aaa"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Dec 2023 02:04:33 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "64"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"No records with given uuid found\",\n    \"status\": \"failed\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get products by uuid",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products/f02c4706-49d5-42b8-92a1-2bbc1a46d864",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"f02c4706-49d5-42b8-92a1-2bbc1a46d864"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get product by uuid",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/products/f02c4706-49d5-42b8-92a1-2bbc1a46d864",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"products",
+										"f02c4706-49d5-42b8-92a1-2bbc1a46d864"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Dec 2023 03:04:56 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "362"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"id\": 1,\n        \"uuid\": \"f02c4706-49d5-42b8-92a1-2bbc1a46d864\",\n        \"product_name\": \"sarimie\",\n        \"image_url\": \"https://res.cloudinary.com/dbjzdsa1w/image/upload/v1701394769/basic-trade-api/TestTemplate_fetcherror_Network.jpg\",\n        \"admin_id\": 1,\n        \"variants\": [\n            {\n                \"id\": 1,\n                \"uuid\": \"f6f745c6-0211-49fd-b5f1-f79ca718f643\",\n                \"variant_name\": \"hehe\",\n                \"qty\": 50,\n                \"product_id\": 1\n            }\n        ]\n    },\n    \"status\": \"success\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Variants",
+			"item": [
+				{
+					"name": "Create a variant",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6aXpAbWFpbC5jb20iLCJleHBpcmVkIjoiMjAyMy0xMS0yOVQwODoyMjowNy40NzQ3NjM2KzA3OjAwIiwiaWQiOjF9.5WCUvSumgIfyWnBKz03P7yTgKrWDET5OsGJG4YaLPts",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"variant_name\": \"indomie goreng rendang\",\r\n    \"product_id\": 1,\r\n    \"qty\": 50\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/products/variants",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"variants"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create a variant",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"variant_name\": \"indomie goreng cabe ijo\",\r\n    \"product_id\": 1,\r\n    \"qty\": 50\r\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/products/variants",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"products",
+										"variants"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Dec 2023 02:43:52 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "147"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"id\": 3,\n        \"uuid\": \"50f78d38-66e8-4bfa-aea6-bad79382f8f4\",\n        \"variant_name\": \"indomie goreng cabe ijo\",\n        \"qty\": 50,\n        \"product_id\": 1\n    },\n    \"status\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update variant by uuid",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"variant_name\": \"indomie goreng cabe biru\",\r\n    \"product_id\": 1,\r\n    \"qty\": 50\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/products/variants/50f78d38-66e8-4bfa-aea6-bad79382f8f4",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"variants",
+								"50f78d38-66e8-4bfa-aea6-bad79382f8f4"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update variant by uuid",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"variant_name\": \"indomie goreng cabe biru\",\r\n    \"product_id\": 1,\r\n    \"qty\": 50\r\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/products/variants/50f78d38-66e8-4bfa-aea6-bad79382f8f4",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"products",
+										"variants",
+										"50f78d38-66e8-4bfa-aea6-bad79382f8f4"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Dec 2023 02:45:06 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "148"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"id\": 3,\n        \"uuid\": \"50f78d38-66e8-4bfa-aea6-bad79382f8f4\",\n        \"variant_name\": \"indomie goreng cabe biru\",\n        \"qty\": 50,\n        \"product_id\": 1\n    },\n    \"status\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get all variants",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products/variants",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"variants"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get all variants",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/products/variants",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"products",
+										"variants"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Dec 2023 02:48:40 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "148"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 2,\n            \"uuid\": \"073d8b89-c5dd-4b4b-b3ad-c40e54971807\",\n            \"variant_name\": \"indomie goreng rendang\",\n            \"qty\": 50,\n            \"product_id\": 1\n        }\n    ],\n    \"status\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get variants by uuid",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": [
+						{
+							"name": "Get variants by uuid",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/products/variants/50f78d38-66e8-4bfa-aea6-bad79382f8f4",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"products",
+										"variants",
+										"50f78d38-66e8-4bfa-aea6-bad79382f8f4"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Dec 2023 02:46:04 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "148"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"id\": 3,\n        \"uuid\": \"50f78d38-66e8-4bfa-aea6-bad79382f8f4\",\n        \"variant_name\": \"indomie goreng cabe biru\",\n        \"qty\": 50,\n        \"product_id\": 1\n    },\n    \"status\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get variants by name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products/variants?variant_name=biru",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"variants"
+							],
+							"query": [
+								{
+									"key": "variant_name",
+									"value": "biru"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get variant by name",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/products/variants?variant_name=biru",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"products",
+										"variants"
+									],
+									"query": [
+										{
+											"key": "variant_name",
+											"value": "biru"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Dec 2023 02:47:24 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "150"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 3,\n            \"uuid\": \"50f78d38-66e8-4bfa-aea6-bad79382f8f4\",\n            \"variant_name\": \"indomie goreng cabe biru\",\n            \"qty\": 50,\n            \"product_id\": 1\n        }\n    ],\n    \"status\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete variants by uuid",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products/variants/50f78d38-66e8-4bfa-aea6-bad79382f8f4",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"variants",
+								"50f78d38-66e8-4bfa-aea6-bad79382f8f4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6aXpAbWFpbC5jb20iLCJleHBpcmVkIjoiMjAyMy0xMi0wMVQxMDowOToyMy43MzYyNzA0KzA3OjAwIiwiaWQiOjF9.GVfemTQhg5_U2R_rZR4JlznUFLN9JdFYJjUK2W17FIQ",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "1"
+		},
+		{
+			"key": "base_url",
+			"value": "http://localhost:8989"
+		}
+	]
+}
