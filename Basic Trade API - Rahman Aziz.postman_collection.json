@@ -629,6 +629,87 @@
 							"body": "{\n    \"data\": {\n        \"id\": 1,\n        \"uuid\": \"f02c4706-49d5-42b8-92a1-2bbc1a46d864\",\n        \"product_name\": \"sarimie\",\n        \"image_url\": \"https://res.cloudinary.com/dbjzdsa1w/image/upload/v1701394769/basic-trade-api/TestTemplate_fetcherror_Network.jpg\",\n        \"admin_id\": 1,\n        \"variants\": [\n            {\n                \"id\": 1,\n                \"uuid\": \"f6f745c6-0211-49fd-b5f1-f79ca718f643\",\n                \"variant_name\": \"hehe\",\n                \"qty\": 50,\n                \"product_id\": 1\n            }\n        ]\n    },\n    \"status\": \"success\"\n}"
 						}
 					]
+				},
+				{
+					"name": "Get all products with pagination",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products?limit=2&last_prev_id=0&product_name=mie sedap",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "2"
+								},
+								{
+									"key": "last_prev_id",
+									"value": "0"
+								},
+								{
+									"key": "product_name",
+									"value": "mie sedap"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get all products with pagination",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/products?limit=2&last_prev_id=0&product_name=mie sedap",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"products"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "2"
+										},
+										{
+											"key": "last_prev_id",
+											"value": "0"
+										},
+										{
+											"key": "product_name",
+											"value": "mie sedap"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 02 Dec 2023 03:03:19 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "349"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 3,\n            \"uuid\": \"f1d0f1d0-9e1a-402e-981d-ece4e1eb8dae\",\n            \"product_name\": \"mie sedap\",\n            \"image_url\": \"https://res.cloudinary.com/dbjzdsa1w/image/upload/v1701480480/basic-trade-api/struktur_modul.png\",\n            \"admin_id\": 1,\n            \"variants\": [\n                {\n                    \"id\": 3,\n                    \"uuid\": \"2f598303-9d79-44d6-8df0-15cb41854852\",\n                    \"variant_name\": \"hehe\",\n                    \"qty\": 50,\n                    \"product_id\": 3\n                }\n            ]\n        }\n    ],\n    \"status\": \"success\"\n}"
+						}
+					]
 				}
 			]
 		},
@@ -958,7 +1039,124 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/products/variants/48dad9e4-fa0f-4a81-af01-e67a705bce35",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"products",
+										"variants",
+										"48dad9e4-fa0f-4a81-af01-e67a705bce35"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "date",
+									"value": "Fri, 01 Dec 2023 04:18:11 GMT"
+								},
+								{
+									"key": "content-length",
+									"value": "151"
+								},
+								{
+									"key": "server",
+									"value": "railway"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": {\n        \"id\": 3,\n        \"uuid\": \"48dad9e4-fa0f-4a81-af01-e67a705bce35\",\n        \"variant_name\": \"indomie goreng cabe biru\",\n        \"qty\": 50,\n        \"product_id\": 1\n    },\n    \"status\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get all variants with pagination",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products/variants?limit=2&last_prev_id=0",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"variants"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "2"
+								},
+								{
+									"key": "last_prev_id",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get all variants with pagination",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/products/variants?limit=2&last_prev_id=4",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"products",
+										"variants"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "2"
+										},
+										{
+											"key": "last_prev_id",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 02 Dec 2023 03:11:48 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "152"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 5,\n            \"uuid\": \"6e330fb4-5f9a-4474-934a-916aa6451c5a\",\n            \"variant_name\": \"indomie goreng cabe kuning\",\n            \"qty\": 50,\n            \"product_id\": 1\n        }\n    ],\n    \"status\": \"success\"\n}"
+						}
+					]
 				}
 			]
 		}
@@ -968,7 +1166,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6aXpAbWFpbC5jb20iLCJleHBpcmVkIjoiMjAyMy0xMi0wMVQwNDoyMzo1My4zNjA3MDAzODlaIiwiaWQiOjF9.Fsj75kNrdAESTvY3xKnzXbOBzQVA6wP_gQbJLNRTzOI",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6aXpAbWFpbC5jb20iLCJleHBpcmVkIjoiMjAyMy0xMi0wMlQwMzoyNzoxNy4zODcyMjMxNDZaIiwiaWQiOjF9.Uzm5vIu0kaLrt3e72Q1NP8BLbDgIEn5hPMIGccARKGE",
 				"type": "string"
 			}
 		]
