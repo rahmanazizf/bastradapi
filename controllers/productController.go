@@ -5,9 +5,9 @@ import (
 	"basic-trade-api/helpers"
 	"basic-trade-api/models"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 )
 
@@ -15,21 +15,28 @@ import (
 func GetAllProducts(ctx *gin.Context) {
 	var products []models.Product
 	productName := ctx.Query("product_name")
+	limit := ctx.Query("limit")
+	lastID := ctx.Query("last_prev_id")
 
 	db := database.ConnectToDB()
-	var res *gorm.DB
+	query := db.Model(&models.Product{}).Preload("Variants")
+
 	if productName != "" {
-		res = db.Preload("Variants").Where("product_name ILIKE ?", "%"+productName+"%").Find(&products)
-	} else {
-		res = db.Preload("Variants").Find(&products)
+		query = query.Where("product_name ILIKE ?", "%"+productName+"%")
 	}
-	if res.Error != nil {
+	if limit != "" && lastID != "" {
+		limitINT, _ := strconv.Atoi(limit)
+		query = query.Where("id > ?", lastID).Order("id ASC").Limit(limitINT)
+	}
+
+	if err := query.Find(&products).Error; err != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
 			"status":  "failed",
-			"message": res.Error.Error(),
+			"message": err.Error(),
 		})
 		return
 	}
+
 	ctx.JSON(http.StatusOK, gin.H{
 		"status": "success",
 		"data":   products,

@@ -4,9 +4,9 @@ import (
 	"basic-trade-api/database"
 	"basic-trade-api/models"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 )
 
@@ -14,18 +14,22 @@ import (
 func GetAllVariants(ctx *gin.Context) {
 	var variants *[]models.Variant
 	variantName := ctx.Query("variant_name")
+	limit := ctx.Query("limit")
+	lastID := ctx.Query("last_prev_id")
 
 	db := database.ConnectToDB()
-	var res *gorm.DB
+	query := db.Model(&models.Variant{})
 	if variantName != "" {
-		res = db.Where("variant_name ILIKE ?", "%"+variantName+"%").Find(&variants)
-	} else {
-		res = db.Find(&variants)
+		query = query.Where("variant_name ILIKE ?", "%"+variantName+"%")
 	}
-	if res.Error != nil {
+	if limit != "" && lastID != "" {
+		limitINT, _ := strconv.Atoi(limit)
+		query = query.Where("id > ?", lastID).Order("id ASC").Limit(limitINT)
+	}
+	if err := query.Find(&variants).Error; err != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
 			"status":  "failed",
-			"message": res.Error.Error(),
+			"message": err.Error(),
 		})
 		return
 	}
