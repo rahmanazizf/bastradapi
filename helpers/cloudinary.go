@@ -62,3 +62,13 @@ func convertFile(fileHeader *multipart.FileHeader) (*bytes.Reader, error) {
 func RemoveExtension(filename string) string {
 	return path.Base(filename[:len(filename)-len(path.Ext(filename))])
 }
+
+func IsImageFile(filename string) bool {
+	ext := path.Ext(filename)
+	switch ext {
+	case "png", "jpg", "jpeg":
+		return true
+	default:
+		return false
+	}
+}

@@ -46,6 +46,7 @@ func GetAllProducts(ctx *gin.Context) {
 func CreateProduct(ctx *gin.Context) {
 	// var product *models.Product
 	// var productForm *models.ProductImage
+	// TODO: tambah validasi untuk membatasi ekstensi file image saja yang dapat diupload
 	product := models.Product{}
 	productForm := models.ProductImage{}
 	var err error
@@ -62,6 +63,16 @@ func CreateProduct(ctx *gin.Context) {
 		err = ctx.ShouldBind(&productForm)
 		helpers.CheckError(err)
 		fileName := helpers.RemoveExtension(productForm.ImageFile.Filename)
+
+		// validate file extension
+		if !helpers.IsImageFile(productForm.ImageFile.Filename) {
+			ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+				"status":  "failed",
+				"message": "Invalid image file extension",
+			})
+			return
+		}
+
 		secureURL, err := helpers.UploadFile(productForm.ImageFile, fileName)
 		if err != nil {
 			ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
