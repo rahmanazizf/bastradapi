@@ -25,7 +25,6 @@ func main() {
 	}
 
 	database.DBConnection()
-	// fmt.Println(fmt.Sprintf("Listening on :%s", PORT))
 	fmt.Printf("Listening on :%s\n", PORT)
 	routers.StartServer().Run(fmt.Sprintf(":%s", PORT))
 }

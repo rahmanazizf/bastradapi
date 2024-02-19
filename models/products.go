@@ -15,7 +15,7 @@ type Product struct {
 	UUID        string    `gorm:"not null" json:"uuid"`
 	ProductName string    `gorm:"not null" json:"product_name" validate:"required"`
 	ImageURL    string    `gorm:"not null" json:"image_url" validate:"required"`
-	AdminID     int       `gorm:"not null" json:"admin_id" validate:"required"`
+	AdminID     int       `gorm:"not null" json:"admin_id"`
 	CreatedAt   time.Time `gorm:"autoCreatedTime" json:"-"`
 	UpdatedAt   time.Time `gorm:"autoUpdatedTime" json:"-"`
 	Variants    []Variant `gorm:"constraint:OnDelete:CASCADE" json:"variants"`
@@ -24,7 +24,7 @@ type Product struct {
 type ProductImage struct {
 	ProductName string                `form:"product_name" binding:"required"`
 	ImageFile   *multipart.FileHeader `form:"image_file" binding:"required"`
-	AdminID     int                   `form:"admin_id" binding:"required"`
+	AdminID     int                   `form:"admin_id"`
 	Variants    []Variant             `form:"variants"`
 }
 

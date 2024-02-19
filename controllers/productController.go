@@ -86,7 +86,7 @@ func CreateProduct(ctx *gin.Context) {
 			return
 		}
 		product.ProductName = productForm.ProductName
-		product.AdminID = productForm.AdminID
+		// product.AdminID = productForm.AdminID
 		product.AdminID = int(adminID)
 		product.ImageURL = secureURL
 		product.Variants = productForm.Variants
@@ -133,6 +133,7 @@ func UpdateProductByID(ctx *gin.Context) {
 	productUUID := ctx.Param("productUUID")
 	var productUpdated = models.ProductImage{}
 	var product = models.Product{}
+	var secureURL string
 	var err error
 	if ctx.Request.Header.Get("Content-Type") == "application/json" {
 		err := ctx.ShouldBindJSON(&product)
@@ -158,7 +159,7 @@ func UpdateProductByID(ctx *gin.Context) {
 			return
 		}
 
-		secureURL, err := helpers.UploadFile(productUpdated.ImageFile, fileName)
+		secureURL, err = helpers.UploadFile(productUpdated.ImageFile, fileName)
 		if err != nil {
 			ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
 				"status":  "failed",
@@ -166,10 +167,14 @@ func UpdateProductByID(ctx *gin.Context) {
 			})
 			return
 		}
-		product.ProductName = productUpdated.ProductName
-		product.AdminID = productUpdated.AdminID
-		product.ImageURL = secureURL
-		product.Variants = productUpdated.Variants
+		// product.ProductName = productUpdated.ProductName
+		// product.AdminID = productUpdated.AdminID
+		// product.ImageURL = secureURL
+		// // check if Variants field is filled in json request or not
+		// // if empty, skip variants field assigntment
+		// if len(productUpdated.Variants) != 0 {
+		// 	product.Variants = productUpdated.Variants
+		// }
 	}
 
 	res := database.ConnectToDB().Find(&product, "uuid = ?", productUUID)
@@ -193,7 +198,13 @@ func UpdateProductByID(ctx *gin.Context) {
 	}
 
 	product.ProductName = productUpdated.ProductName
-	product.Variants = productUpdated.Variants
+	product.ImageURL = secureURL
+	// check if Variants field is filled in json request or not
+	// if empty, skip variants field assigntment
+	if len(productUpdated.Variants) != 0 {
+		product.Variants = productUpdated.Variants
+	}
+
 	res = database.ConnectToDB().Save(&product)
 	if res.Error != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
