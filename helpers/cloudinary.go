@@ -66,7 +66,7 @@ func RemoveExtension(filename string) string {
 func IsImageFile(filename string) bool {
 	ext := path.Ext(filename)
 	switch ext {
-	case "png", "jpg", "jpeg":
+	case ".png", ".jpg", ".jpeg":
 		return true
 	default:
 		return false
