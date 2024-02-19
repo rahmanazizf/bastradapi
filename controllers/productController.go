@@ -8,6 +8,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v5"
 	"gorm.io/gorm/clause"
 )
 
@@ -46,6 +47,7 @@ func GetAllProducts(ctx *gin.Context) {
 func CreateProduct(ctx *gin.Context) {
 	// var product *models.Product
 	// var productForm *models.ProductImage
+	// TODO: tambah validasi untuk membatasi ekstensi file image saja yang dapat diupload
 	product := models.Product{}
 	productForm := models.ProductImage{}
 	var err error
@@ -60,8 +62,21 @@ func CreateProduct(ctx *gin.Context) {
 		}
 	} else {
 		err = ctx.ShouldBind(&productForm)
+		adminData := ctx.MustGet("AdminData").(jwt.MapClaims)
+		adminID := adminData["id"].(float64)
 		helpers.CheckError(err)
 		fileName := helpers.RemoveExtension(productForm.ImageFile.Filename)
+
+		// validate file extension
+		isImage := helpers.IsImageFile(productForm.ImageFile.Filename)
+		if !isImage {
+			ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+				"status":  "failed",
+				"message": "Invalid image file extension",
+			})
+			return
+		}
+
 		secureURL, err := helpers.UploadFile(productForm.ImageFile, fileName)
 		if err != nil {
 			ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
@@ -71,7 +86,8 @@ func CreateProduct(ctx *gin.Context) {
 			return
 		}
 		product.ProductName = productForm.ProductName
-		product.AdminID = productForm.AdminID
+		// product.AdminID = productForm.AdminID
+		product.AdminID = int(adminID)
 		product.ImageURL = secureURL
 		product.Variants = productForm.Variants
 	}
@@ -117,6 +133,7 @@ func UpdateProductByID(ctx *gin.Context) {
 	productUUID := ctx.Param("productUUID")
 	var productUpdated = models.ProductImage{}
 	var product = models.Product{}
+	var secureURL string
 	var err error
 	if ctx.Request.Header.Get("Content-Type") == "application/json" {
 		err := ctx.ShouldBindJSON(&product)
@@ -131,7 +148,18 @@ func UpdateProductByID(ctx *gin.Context) {
 		err = ctx.ShouldBind(&productUpdated)
 		helpers.CheckError(err)
 		fileName := helpers.RemoveExtension(productUpdated.ImageFile.Filename)
-		secureURL, err := helpers.UploadFile(productUpdated.ImageFile, fileName)
+
+		// validate file extension
+		isImage := helpers.IsImageFile(productUpdated.ImageFile.Filename)
+		if !isImage {
+			ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+				"status":  "failed",
+				"message": "Invalid image file extension",
+			})
+			return
+		}
+
+		secureURL, err = helpers.UploadFile(productUpdated.ImageFile, fileName)
 		if err != nil {
 			ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
 				"status":  "failed",
@@ -139,10 +167,14 @@ func UpdateProductByID(ctx *gin.Context) {
 			})
 			return
 		}
-		product.ProductName = productUpdated.ProductName
-		product.AdminID = productUpdated.AdminID
-		product.ImageURL = secureURL
-		product.Variants = productUpdated.Variants
+		// product.ProductName = productUpdated.ProductName
+		// product.AdminID = productUpdated.AdminID
+		// product.ImageURL = secureURL
+		// // check if Variants field is filled in json request or not
+		// // if empty, skip variants field assigntment
+		// if len(productUpdated.Variants) != 0 {
+		// 	product.Variants = productUpdated.Variants
+		// }
 	}
 
 	res := database.ConnectToDB().Find(&product, "uuid = ?", productUUID)
@@ -166,7 +198,13 @@ func UpdateProductByID(ctx *gin.Context) {
 	}
 
 	product.ProductName = productUpdated.ProductName
-	product.Variants = productUpdated.Variants
+	product.ImageURL = secureURL
+	// check if Variants field is filled in json request or not
+	// if empty, skip variants field assigntment
+	if len(productUpdated.Variants) != 0 {
+		product.Variants = productUpdated.Variants
+	}
+
 	res = database.ConnectToDB().Save(&product)
 	if res.Error != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
